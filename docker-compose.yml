@@ -1,0 +1,15 @@
+services:
+  custom-legends-db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: custom-legends-password
+      POSTGRES_DB: custom-legends
+    volumes:
+      - custom-legends-db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  custom-legends-db-data:
+    driver: local
