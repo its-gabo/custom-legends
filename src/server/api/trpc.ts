@@ -11,6 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "@/server/db";
+import type { User } from "better-auth";
 
 /**
  * 1. CONTEXT
@@ -24,7 +25,10 @@ import { db } from "@/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = async (opts: {
+  headers: Headers;
+  currentUser: User | null;
+}) => {
   return {
     db,
     ...opts,
@@ -97,6 +101,21 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 });
 
 /**
+ * Middleware for checking if the user is authenticated.
+ *
+ * This is used to protect procedures that require the user to be logged in.
+ *
+ * @see https://trpc.io/docs/server/middlewares#authentication
+ */
+const authMiddleware = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.currentUser) {
+    throw new Error("🔒 You must be logged in to access this resource.");
+  }
+
+  return next();
+});
+
+/**
  * Public (unauthenticated) procedure
  *
  * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
@@ -104,3 +123,13 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * Protected (authenticated) procedure
+ *
+ * This is the base piece you use to build new queries and mutations on your tRPC API that require
+ * the user to be logged in. If the user is not logged in, it will throw an error.
+ */
+export const protectedProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(authMiddleware);
