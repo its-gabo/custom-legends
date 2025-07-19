@@ -8,6 +8,13 @@
       "when": 1752878799665,
       "tag": "0000_setup_better_auth_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752957380431,
+      "tag": "0001_create_initial_db_schema",
+      "breakpoints": true
     }
   ]
 }
