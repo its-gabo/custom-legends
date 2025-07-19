@@ -1,9 +1,12 @@
 import { text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { createTable, id } from "./schema";
+import { createTable } from "./schema";
 import { users } from "./auth.schema";
+import { sql } from "drizzle-orm";
 
 export const groups = createTable("groups", {
-  ...id,
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
   name: text("name").notNull(),
   createdAt: timestamp("created_at")
     .$defaultFn(() => new Date())
@@ -11,7 +14,9 @@ export const groups = createTable("groups", {
 });
 
 export const groupUsers = createTable("group_users", {
-  ...id,
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
   groupId: uuid("group_id")
     .references(() => groups.id, { onDelete: "cascade" })
     .notNull(),

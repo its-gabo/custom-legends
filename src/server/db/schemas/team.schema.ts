@@ -1,10 +1,13 @@
 import { integer, text, boolean, uuid } from "drizzle-orm/pg-core";
-import { createTable, id } from "./schema";
+import { createTable } from "./schema";
 import { games } from "./game.schema";
 import { users } from "./auth.schema";
+import { sql } from "drizzle-orm";
 
 export const teams = createTable("teams", {
-  ...id,
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
   gameId: uuid("game_id")
     .notNull()
     .references(() => games.id, { onDelete: "cascade" }),
@@ -15,7 +18,9 @@ export const teams = createTable("teams", {
 });
 
 export const teamPlayers = createTable("team_players", {
-  ...id,
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
   teamId: uuid("team_id")
     .notNull()
     .references(() => teams.id, { onDelete: "cascade" }),
