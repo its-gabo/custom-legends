@@ -1,29 +1,110 @@
-# Create T3 App
+# ⚔️ Custom Legends
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Track, analyze, and improve your League of Legends custom game performance with detailed statistics.
 
-## What's next? How do I make an app with this?
+<br />
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## 🛠️ Tech Stack
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Framework:** Next.js 14 with TypeScript
+- **Authentication:** Better Auth with email/password
+- **Database:** PostgreSQL with Drizzle ORM
+- **API:** tRPC for type-safe APIs
+- **Styling:** Tailwind CSS
+- **Package Manager:** Bun
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+<br />
 
-## Learn More
+## 🚀 Getting Started
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Prerequisites
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Before you begin, ensure you have the following installed:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- [Node.js](https://nodejs.org/) (v22.6.0 or higher)
+- [Bun](https://bun.sh/) (latest version)
+- [Docker](https://docker.com/)
 
-## How do I deploy this?
+<br />
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## 🔧 Installation
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/its-gabo/custom-legends.git
+cd custom-legends
+```
+
+### 2. Install dependencies
+
+```bash
+bun install
+```
+
+### 3. Start the database with Docker
+
+```bash
+docker-compose up -d
+```
+
+### 4. **Set up environment variables**
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and add your configuration:
+
+ ```env
+# Drizzle
+DATABASE_URL="postgresql://postgres:custom-legends-password@localhost:5432/custom-legends"
+
+# BetterAuth
+BETTER_AUTH_URL="http://localhost:3000"
+BETTER_AUTH_SECRET="your_generated_secret"
+```
+
+### 5. Set up the database schema
+
+```bash
+bun run db:migrate
+```
+
+### 6. Start the development server
+
+```bash
+bun run dev
+```
+
+### 7. Open your browser
+
+Navigate to [http://localhost:3000](http://localhost:3000)
+
+<br />
+
+## 📁 Project Structure
+
+```
+custom-legends/
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── api/            # API routes
+│   │   │   ├── auth/       # Better Auth routes
+│   │   │   └── trpc/       # tRPC API routes
+│   │   ├── _components/    # Shared components
+│   │   └── page.tsx        # Home page
+│   ├── server/             # Server-side code
+│   │   ├── api/           # tRPC routers
+│   │   │   └── routers/   # API route handlers
+│   │   ├── db/            # Database configuration
+│   │   │   ├── schema.ts  # Main schema
+│   │   │   └── auth.schema.ts # Auth tables
+│   │   └── lib/           # Server utilities
+│   │       └── auth.ts    # Better Auth config
+│   ├── lib/               # Shared utilities
+│   ├── styles/            # Global styles
+│   └── trpc/              # tRPC client configuration
+├── public/                # Static assets
+├── drizzle.config.ts      # Drizzle ORM configuration
+└── package.json
+```
