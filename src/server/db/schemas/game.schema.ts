@@ -1,7 +1,8 @@
-import { text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { createTable } from "./schema";
-import { groups } from "./group.schema";
 import { sql } from "drizzle-orm";
+import { text, timestamp, uuid } from "drizzle-orm/pg-core";
+
+import { groups } from "./group.schema";
+import { createTable } from "./schema";
 
 export const games = createTable("games", {
   id: uuid("id")

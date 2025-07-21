@@ -1,7 +1,8 @@
-import { text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { createTable } from "./schema";
-import { users } from "./auth.schema";
 import { sql } from "drizzle-orm";
+import { text, timestamp, uuid } from "drizzle-orm/pg-core";
+
+import { users } from "./auth.schema";
+import { createTable } from "./schema";
 
 export const groups = createTable("groups", {
   id: uuid("id")

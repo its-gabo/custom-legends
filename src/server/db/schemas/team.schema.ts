@@ -1,8 +1,9 @@
-import { integer, text, boolean, uuid } from "drizzle-orm/pg-core";
-import { createTable } from "./schema";
-import { games } from "./game.schema";
-import { users } from "./auth.schema";
 import { sql } from "drizzle-orm";
+import { integer, text, boolean, uuid } from "drizzle-orm/pg-core";
+
+import { users } from "./auth.schema";
+import { games } from "./game.schema";
+import { createTable } from "./schema";
 
 export const teams = createTable("teams", {
   id: uuid("id")
