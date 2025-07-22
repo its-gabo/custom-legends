@@ -41,7 +41,7 @@ export default function RegisterForm() {
 
     registerUser(data, {
       onSuccess: () => {
-        router.push("/");
+        router.push("/auth/login");
       },
     });
   };

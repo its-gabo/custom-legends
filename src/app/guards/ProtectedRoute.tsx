@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-import { useGetSession } from "../hooks/useGetSession";
+import { useGetSession } from "../hooks";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
