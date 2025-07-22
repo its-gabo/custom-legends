@@ -21,7 +21,7 @@ export const groupUsers = createTable("group_users", {
   groupId: uuid("group_id")
     .references(() => groups.id, { onDelete: "cascade" })
     .notNull(),
-  userId: uuid("user_id")
+  userId: text("user_id")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
   nickname: text("nickname"),

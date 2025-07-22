@@ -9,7 +9,7 @@ CREATE TABLE "custom-legends_games" (
 CREATE TABLE "custom-legends_group_users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"group_id" uuid NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"nickname" text
 );
 --> statement-breakpoint
@@ -22,7 +22,7 @@ CREATE TABLE "custom-legends_groups" (
 CREATE TABLE "custom-legends_team_players" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"team_id" uuid NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"champion" text,
 	"role" text,
 	"kills" integer,
