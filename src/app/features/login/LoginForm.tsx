@@ -1,45 +1,43 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, UserPlus } from "lucide-react";
+import { Loader2, LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 
-import { useRegisterUser } from "@/app/hooks";
+import { useLoginUser } from "@/app/hooks";
 import { getFormFields } from "@/app/utils";
 import { FormFieldRenderer } from "@/components";
 import { Button } from "@/components/common";
 
-import { RegisterUserSchema } from "./register.schema";
+import { LoginUserSchema } from "./login.schema";
 
-import type { IRegisterUser } from "./register.type";
+import type { ILoginUser } from "./login.type";
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const router = useRouter();
-  const { mutate: registerUser, isPending } = useRegisterUser();
+  const { mutate: loginUser, isPending } = useLoginUser();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterUser>({
-    resolver: zodResolver(RegisterUserSchema),
+  } = useForm<ILoginUser>({
+    resolver: zodResolver(LoginUserSchema),
     mode: "onChange",
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      passwordConfirmation: "",
     },
   });
 
-  const registerFormFields = getFormFields(RegisterUserSchema);
+  const loginFormFields = getFormFields(LoginUserSchema);
 
-  const onSubmit = async (data: IRegisterUser) => {
+  const onSubmit = async (data: ILoginUser) => {
     if (!data) return;
 
-    registerUser(data, {
+    loginUser(data, {
       onSuccess: () => {
         router.push("/");
       },
@@ -53,7 +51,7 @@ export default function RegisterForm() {
       autoComplete="off"
     >
       <FormFieldRenderer
-        fields={registerFormFields}
+        fields={loginFormFields}
         errors={errors}
         control={control}
       />
@@ -61,14 +59,14 @@ export default function RegisterForm() {
         {match(isPending)
           .with(true, () => <Loader2 className="animate-spin" size={16} />)
           .with(false, () => (
-            <UserPlus
+            <LogIn
               className="opacity-60 transition-transform group-hover:scale-120"
               size={16}
               aria-hidden="true"
             />
           ))
           .exhaustive()}
-        Register
+        Login
       </Button>
     </form>
   );
