@@ -62,4 +62,18 @@ export const authRouter = createTRPCRouter({
         });
       }
     }),
+
+  getSession: publicProcedure.query(async ({ ctx }) => {
+    const session = await auth.api.getSession(ctx);
+
+    if (!session) {
+      return null;
+    }
+
+    const {
+      user: { id: userId },
+    } = session;
+
+    return userId;
+  }),
 });
