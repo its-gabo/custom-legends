@@ -2,14 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, UserPlus } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 
 import { useRegisterUser } from "@/app/hooks";
 import { getFormFields } from "@/app/utils";
-import { FormFieldRenderer } from "@/components";
 import { Button } from "@/components/common";
+import { FormFieldRenderer } from "@/components/form";
 
 import { RegisterUserSchema } from "./register.schema";
 
@@ -47,17 +48,13 @@ export default function RegisterForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5"
-      autoComplete="off"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
       <FormFieldRenderer
         fields={registerFormFields}
         errors={errors}
         control={control}
       />
-      <Button className="group mt-5 w-full" disabled={isPending}>
+      <Button className="group mt-4 w-full" disabled={isPending}>
         {match(isPending)
           .with(true, () => <Loader2 className="animate-spin" size={16} />)
           .with(false, () => (
@@ -70,6 +67,12 @@ export default function RegisterForm() {
           .exhaustive()}
         Register
       </Button>
+      <div className="mt-5 text-center text-sm">
+        Already have an account?{" "}
+        <Link href="/auth/login" className="underline underline-offset-4">
+          Log in
+        </Link>
+      </div>
     </form>
   );
 }

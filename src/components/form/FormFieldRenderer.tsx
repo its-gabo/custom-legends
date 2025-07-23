@@ -20,7 +20,7 @@ export default function FormFieldRenderer<T extends FieldValues>({
   control,
 }: IFormFieldRendererProps<T>) {
   return (
-    <>
+    <div className="space-y-4">
       {fields.map((field: IFormField) => (
         <FormField
           key={field.name}
@@ -29,6 +29,6 @@ export default function FormFieldRenderer<T extends FieldValues>({
           control={control}
         />
       ))}
-    </>
+    </div>
   );
 }
