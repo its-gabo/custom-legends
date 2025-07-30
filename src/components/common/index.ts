@@ -2,3 +2,8 @@ export * from "./Button";
 export * from "./Card";
 export * from "./Input";
 export * from "./Label";
+export * from "./Separator";
+export * from "./Skeleton";
+export * from "./Sheet";
+export * from "./Sidebar";
+export * from "./Tooltip";
