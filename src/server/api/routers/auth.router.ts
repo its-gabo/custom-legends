@@ -2,7 +2,11 @@ import { TRPCError } from "@trpc/server";
 
 import { LoginUserSchema } from "@/app/features/login";
 import { RegisterUserSchema } from "@/app/features/register";
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 import { auth } from "@/server/lib/auth";
 
 export const authRouter = createTRPCRouter({
@@ -76,5 +80,9 @@ export const authRouter = createTRPCRouter({
     const { user } = session;
 
     return user;
+  }),
+
+  xD: protectedProcedure.query(async () => {
+    return "xD";
   }),
 });

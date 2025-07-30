@@ -11,7 +11,7 @@ import { auth } from "@/server/lib/auth";
  * handling a HTTP request (e.g. when you make requests from Client Components).
  */
 const createContext = async (req: NextRequest) => {
-  const session = await auth.api.getSession(req);
+  const session = await auth.api.getSession({ headers: req.headers });
 
   return createTRPCContext({
     headers: req.headers,
