@@ -38,23 +38,26 @@ export const authRouter = createTRPCRouter({
       try {
         const { email, password } = input;
 
-        const { user } = await auth.api.signInEmail({
+        const signInResponse = await auth.api.signInEmail({
           body: {
             email,
             password,
           },
+          asResponse: true,
+          returnHeaders: true,
         });
 
-        if (!user) {
+        if (!signInResponse.ok) {
           throw new TRPCError({
             code: "UNAUTHORIZED",
             message: "Invalid email or password.",
           });
         }
 
-        const { id, name: createdUserName, email: createdUserEmail } = user;
-
-        return { id, name: createdUserName, email: createdUserEmail };
+        return {
+          success: true,
+          sessionCookie: signInResponse.headers.get("set-cookie") ?? "",
+        };
       } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -70,10 +73,8 @@ export const authRouter = createTRPCRouter({
       return null;
     }
 
-    const {
-      user: { id: userId },
-    } = session;
+    const { user } = session;
 
-    return userId;
+    return user;
   }),
 });
